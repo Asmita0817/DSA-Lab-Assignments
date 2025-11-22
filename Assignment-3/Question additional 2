@@ -1,0 +1,59 @@
+#include<stdio.h>
+#define SIZE 5
+
+int stack[SIZE];
+int minStack[SIZE];
+int top = -1;
+int minTop = -1;
+
+void push(int value) {
+    if(top == SIZE-1) {
+        printf("Stack full!\n");
+        return;
+    }
+    
+    top++;
+    stack[top] = value;
+    
+    if(minTop == -1 || value <= minStack[minTop]) {
+        minTop++;
+        minStack[minTop] = value;
+    }
+}
+
+int pop() {
+    if(top == -1) {
+        printf("Stack empty!\n");
+        return -1;
+    }
+    
+    int value = stack[top];
+    top--;
+    
+    if(value == minStack[minTop]) {
+        minTop--;
+    }
+    
+    return value;
+}
+
+int getMin() {
+    if(minTop == -1) {
+        printf("Stack empty!\n");
+        return -1;
+    }
+    return minStack[minTop];
+}
+
+int main() {
+    push(5);
+    push(3);
+    push(7);
+    
+    printf("Current min: %d\n", getMin());
+    
+    pop();
+    printf("After popping, min: %d\n", getMin());
+    
+    return 0;
+}
