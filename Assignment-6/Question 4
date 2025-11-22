@@ -1,0 +1,57 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+
+struct Node {
+    char data;
+    struct Node* next;
+    struct Node* prev;
+};
+
+bool isPalindrome() {
+    // Create list: NULL <- L <-> E <-> V <-> E <-> L -> NULL
+    struct Node* head = NULL;
+    struct Node* last = NULL;
+    char str[] = {'L', 'E', 'V', 'E', 'L'};
+    int n = 5;
+    
+    // Build doubly linked list
+    for(int i=0; i<n; i++) {
+        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+        newNode->data = str[i];
+        newNode->next = NULL;
+        newNode->prev = last;
+        
+        if(head == NULL) {
+            head = newNode;
+        } else {
+            last->next = newNode;
+        }
+        last = newNode;
+    }
+    
+    printf("Input: NULL <- L <-> E <-> V <-> E <-> L -> NULL\n");
+    
+    // Check palindrome using two pointers
+    struct Node* left = head;
+    struct Node* right = last;
+    
+    while(left != right && left->prev != right) {
+        if(left->data != right->data) {
+            return false;
+        }
+        left = left->next;
+        right = right->prev;
+    }
+    
+    return true;
+}
+
+int main() {
+    if(isPalindrome()) {
+        printf("Output: True\n");
+    } else {
+        printf("Output: False\n");
+    }
+    return 0;
+}
