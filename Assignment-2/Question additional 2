@@ -1,0 +1,63 @@
+#include<stdio.h>
+#include<string.h>
+
+int main() {
+    char str[100];
+    int i, j, k, len;
+    int found = 0;
+    
+    printf("Enter a string: ");
+    scanf("%s", str);
+    
+    len = strlen(str);
+    printf("String: %s\n", str);
+    printf("Length: %d\n", len);
+    
+    printf("\nTrying to split into 3 parts where one part is substring of both others...\n");
+    
+    // Try all possible splits
+    for(i=1; i<len-1; i++) {
+        for(j=i+1; j<len; j++) {
+            // Three parts: str[0..i-1], str[i..j-1], str[j..end]
+            char part1[100], part2[100], part3[100];
+            
+            // Extract three parts
+            strncpy(part1, str, i);
+            part1[i] = '\0';
+            
+            strncpy(part2, str + i, j - i);
+            part2[j - i] = '\0';
+            
+            strcpy(part3, str + j);
+            
+            printf("\nTrying split: '%s' | '%s' | '%s'\n", part1, part2, part3);
+            
+            // Check if part1 is substring of both part2 and part3
+            if(strstr(part2, part1) != NULL && strstr(part3, part1) != NULL) {
+                printf("SUCCESS! Part '%s' is substring of both '%s' and '%s'\n", part1, part2, part3);
+                found = 1;
+            }
+            // Check if part2 is substring of both part1 and part3
+            else if(strstr(part1, part2) != NULL && strstr(part3, part2) != NULL) {
+                printf("SUCCESS! Part '%s' is substring of both '%s' and '%s'\n", part2, part1, part3);
+                found = 1;
+            }
+            // Check if part3 is substring of both part1 and part2
+            else if(strstr(part1, part3) != NULL && strstr(part2, part3) != NULL) {
+                printf(" SUCCESS! Part '%s' is substring of both '%s' and '%s'\n", part3, part1, part2);
+                found = 1;
+            }
+            
+            if(found) break;
+        }
+        if(found) break;
+    }
+    
+    if(!found) {
+        printf("\n Cannot split the string as required\n");
+    } else {
+        printf("\n String can be split into 3 parts where one is substring of both others!\n");
+    }
+    
+    return 0;
+}
