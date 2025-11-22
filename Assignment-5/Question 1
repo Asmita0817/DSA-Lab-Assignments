@@ -1,0 +1,206 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* head = NULL;
+
+// (a) Insert at beginning
+void insertAtStart() {
+    int value;
+    printf("Enter value: ");
+    scanf("%d", &value);
+    
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = head;
+    head = newNode;
+    printf("%d inserted at beginning\n", value);
+}
+
+// (b) Insert at end
+void insertAtEnd() {
+    int value;
+    printf("Enter value: ");
+    scanf("%d", &value);
+    
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+    
+    if(head == NULL) {
+        head = newNode;
+    } else {
+        struct Node* temp = head;
+        while(temp->next != NULL) {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+    }
+    printf("%d inserted at end\n", value);
+}
+
+// (c) Insert before a specific value
+void insertBefore() {
+    int value, beforeValue;
+    printf("Enter value to insert: ");
+    scanf("%d", &value);
+    printf("Enter value before which to insert: ");
+    scanf("%d", &beforeValue);
+    
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    
+    if(head == NULL) {
+        printf("List is empty!\n");
+        return;
+    }
+    
+    if(head->data == beforeValue) {
+        newNode->next = head;
+        head = newNode;
+        printf("%d inserted before %d\n", value, beforeValue);
+        return;
+    }
+    
+    struct Node* temp = head;
+    while(temp->next != NULL && temp->next->data != beforeValue) {
+        temp = temp->next;
+    }
+    
+    if(temp->next == NULL) {
+        printf("Value %d not found!\n", beforeValue);
+    } else {
+        newNode->next = temp->next;
+        temp->next = newNode;
+        printf("%d inserted before %d\n", value, beforeValue);
+    }
+}
+
+// (d) Delete from beginning
+void deleteFromStart() {
+    if(head == NULL) {
+        printf("List is empty!\n");
+    } else {
+        struct Node* temp = head;
+        head = head->next;
+        printf("%d deleted from beginning\n", temp->data);
+        free(temp);
+    }
+}
+
+// (e) Delete from end
+void deleteFromEnd() {
+    if(head == NULL) {
+        printf("List is empty!\n");
+    } else if(head->next == NULL) {
+        printf("%d deleted from end\n", head->data);
+        free(head);
+        head = NULL;
+    } else {
+        struct Node* temp = head;
+        while(temp->next->next != NULL) {
+            temp = temp->next;
+        }
+        printf("%d deleted from end\n", temp->next->data);
+        free(temp->next);
+        temp->next = NULL;
+    }
+}
+
+// (f) Delete specific node
+void deleteSpecific() {
+    int value;
+    printf("Enter value to delete: ");
+    scanf("%d", &value);
+    
+    if(head == NULL) {
+        printf("List is empty!\n");
+        return;
+    }
+    
+    if(head->data == value) {
+        struct Node* temp = head;
+        head = head->next;
+        free(temp);
+        printf("%d deleted\n", value);
+        return;
+    }
+    
+    struct Node* temp = head;
+    while(temp->next != NULL && temp->next->data != value) {
+        temp = temp->next;
+    }
+    
+    if(temp->next == NULL) {
+        printf("Value %d not found!\n", value);
+    } else {
+        struct Node* toDelete = temp->next;
+        temp->next = temp->next->next;
+        free(toDelete);
+        printf("%d deleted\n", value);
+    }
+}
+
+// (g) Search node
+void searchNode() {
+    int value, position = 1;
+    printf("Enter value to search: ");
+    scanf("%d", &value);
+    
+    struct Node* temp = head;
+    while(temp != NULL) {
+        if(temp->data == value) {
+            printf("Value %d found at position %d\n", value, position);
+            return;
+        }
+        temp = temp->next;
+        position++;
+    }
+    printf("Value %d not found!\n", value);
+}
+
+// (h) Display all nodes
+void display() {
+    if(head == NULL) {
+        printf("List is empty!\n");
+    } else {
+        struct Node* temp = head;
+        printf("Linked List: ");
+        while(temp != NULL) {
+            printf("%d -> ", temp->data);
+            temp = temp->next;
+        }
+        printf("NULL\n");
+    }
+}
+
+int main() {
+    int choice;
+    
+    printf("Singly Linked List Operations:\n");
+    printf("1. Insert at beginning\n2. Insert at end\n3. Insert before value\n");
+    printf("4. Delete from beginning\n5. Delete from end\n6. Delete specific\n");
+    printf("7. Search node\n8. Display\n9. Exit\n");
+    
+    while(1) {
+        printf("\nEnter choice: ");
+        scanf("%d", &choice);
+        
+        switch(choice) {
+            case 1: insertAtStart(); break;
+            case 2: insertAtEnd(); break;
+            case 3: insertBefore(); break;
+            case 4: deleteFromStart(); break;
+            case 5: deleteFromEnd(); break;
+            case 6: deleteSpecific(); break;
+            case 7: searchNode(); break;
+            case 8: display(); break;
+            case 9: return 0;
+            default: printf("Invalid choice!\n");
+        }
+    }
+}
