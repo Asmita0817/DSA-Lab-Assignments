@@ -1,0 +1,80 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+// Doubly Linked List Node
+struct DNode {
+    int data;
+    struct DNode* next;
+    struct DNode* prev;
+};
+
+// Circular Linked List Node
+struct CNode {
+    int data;
+    struct CNode* next;
+};
+
+void findSizes() {
+    printf("3) Finding Sizes of Linked Lists:\n\n");
+    
+    // Create Doubly Linked List: 1<->2<->3<->4
+    struct DNode* dhead = NULL;
+    struct DNode* dlast = NULL;
+    for(int i=1; i<=4; i++) {
+        struct DNode* newNode = (struct DNode*)malloc(sizeof(struct DNode));
+        newNode->data = i;
+        newNode->next = NULL;
+        newNode->prev = dlast;
+        
+        if(dhead == NULL) {
+            dhead = newNode;
+        } else {
+            dlast->next = newNode;
+        }
+        dlast = newNode;
+    }
+    
+    // Create Circular Linked List: 10->20->30
+    struct CNode* chead = NULL;
+    struct CNode* clast = NULL;
+    int carr[] = {10, 20, 30};
+    for(int i=0; i<3; i++) {
+        struct CNode* newNode = (struct CNode*)malloc(sizeof(struct CNode));
+        newNode->data = carr[i];
+        newNode->next = NULL;
+        
+        if(chead == NULL) {
+            chead = newNode;
+            clast = newNode;
+        } else {
+            clast->next = newNode;
+            clast = newNode;
+        }
+    }
+    clast->next = chead; // Make it circular
+    
+    // Find size of Doubly Linked List
+    int dsize = 0;
+    struct DNode* dtemp = dhead;
+    while(dtemp != NULL) {
+        dsize++;
+        dtemp = dtemp->next;
+    }
+    printf("i. Doubly Linked List Size: %d\n", dsize);
+    
+    // Find size of Circular Linked List
+    int csize = 0;
+    if(chead != NULL) {
+        struct CNode* ctemp = chead;
+        do {
+            csize++;
+            ctemp = ctemp->next;
+        } while(ctemp != chead);
+    }
+    printf("ii. Circular Linked List Size: %d\n", csize);
+}
+
+int main() {
+    findSizes();
+    return 0;
+}
