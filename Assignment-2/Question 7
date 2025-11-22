@@ -1,0 +1,25 @@
+#include<stdio.h>
+
+int main() {
+    int arr[] = {8, 4, 2, 1};
+    int n = 4;
+    int count = 0;
+    
+    printf("Array: ");
+    for(int i=0; i<n; i++) {
+        printf("%d ", arr[i]);
+    }
+    
+    printf("\n\nInversions found:\n");
+    for(int i=0; i<n-1; i++) {
+        for(int j=i+1; j<n; j++) {
+            if(arr[i] > arr[j]) {
+                printf("(%d,%d) - values: (%d,%d)\n", i, j, arr[i], arr[j]);
+                count++;
+            }
+        }
+    }
+    
+    printf("\nTotal inversions: %d\n", count);
+    return 0;
+}
