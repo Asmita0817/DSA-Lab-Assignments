@@ -1,0 +1,53 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+bool isCircular() {
+    // Create a circular list: 2->4->6->7->5->back to 2
+    struct Node* head = NULL;
+    struct Node* last = NULL;
+    int arr[] = {2, 4, 6, 7, 5};
+    int n = 5;
+    
+    // Build circular linked list
+    for(int i=0; i<n; i++) {
+        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+        newNode->data = arr[i];
+        newNode->next = NULL;
+        
+        if(head == NULL) {
+            head = newNode;
+            last = newNode;
+        } else {
+            last->next = newNode;
+            last = newNode;
+        }
+    }
+    last->next = head; // Make it circular
+    
+    printf("LinkedList: 2->4->6->7->5\n");
+    
+    // Check if circular
+    if(head == NULL) return true;
+    
+    struct Node* temp = head->next;
+    while(temp != NULL && temp != head) {
+        temp = temp->next;
+    }
+    
+    return (temp == head);
+}
+
+int main() {
+    if(isCircular()) {
+        printf("Output: True\n");
+    } else {
+        printf("Output: False\n");
+    }
+    return 0;
+}
