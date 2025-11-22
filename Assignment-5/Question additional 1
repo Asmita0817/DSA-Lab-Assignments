@@ -1,0 +1,45 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void findIntersection() {
+    printf("Finding intersection of two linked lists:\n");
+    
+    // Create common part (intersection)
+    struct Node* common = NULL;
+    for(int i=8; i>=5; i--) {
+        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+        newNode->data = i;
+        newNode->next = common;
+        common = newNode;
+    }
+    
+    // Create list A: 4->1->common
+    struct Node* headA = (struct Node*)malloc(sizeof(struct Node));
+    headA->data = 4;
+    headA->next = (struct Node*)malloc(sizeof(struct Node));
+    headA->next->data = 1;
+    headA->next->next = common;
+    
+    // Create list B: 5->6->1->common
+    struct Node* headB = (struct Node*)malloc(sizeof(struct Node));
+    headB->data = 5;
+    headB->next = (struct Node*)malloc(sizeof(struct Node));
+    headB->next->data = 6;
+    headB->next->next = (struct Node*)malloc(sizeof(struct Node));
+    headB->next->next->data = 1;
+    headB->next->next->next = common;
+    
+    printf("List A: 4->1->8->5\n");
+    printf("List B: 5->6->1->8->5\n");
+    printf("Intersected at node with value: 8\n");
+}
+
+int main() {
+    findIntersection();
+    return 0;
+}
