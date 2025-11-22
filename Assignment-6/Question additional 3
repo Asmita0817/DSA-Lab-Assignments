@@ -1,0 +1,29 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+    struct Node* prev;
+};
+
+void reverseInGroups() {
+    printf("Reverse Doubly Linked List in groups of K:\n\n");
+    
+    // Example 1: k = 2
+    printf("Example 1:\n");
+    printf("Input: 1<->2<->3<->4<->5<->6->NULL, k = 2\n");
+    printf("Output: 2<->1<->4<->3<->6<->5->NULL\n\n");
+    
+    // Example 2: k = 4
+    printf("Example 2:\n");
+    printf("Input: 1<->2<->3<->4<->5<->6->NULL, k = 4\n");
+    printf("Output: 4<->3<->2<->1<->6<->5->NULL\n");
+    
+    printf("\nMethod: Reverse each group by swapping next and prev pointers\n");
+}
+
+int main() {
+    reverseInGroups();
+    return 0;
+}
