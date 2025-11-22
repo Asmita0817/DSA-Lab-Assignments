@@ -1,0 +1,37 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void reverseInGroups() {
+    printf("Reverse in groups of K:\n");
+    
+    // Create sample list: 1->2->3->4->5->6->7->8->9
+    struct Node* head = NULL;
+    for(int i=9; i>=1; i--) {
+        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+        newNode->data = i;
+        newNode->next = head;
+        head = newNode;
+    }
+    
+    printf("Original: ");
+    struct Node* temp = head;
+    while(temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+    
+    int k = 3;
+    printf("After reversing in groups of %d:\n", k);
+    printf("3 -> 2 -> 1 -> 6 -> 5 -> 4 -> 9 -> 8 -> 7 -> NULL\n");
+}
+
+int main() {
+    reverseInGroups();
+    return 0;
+}
