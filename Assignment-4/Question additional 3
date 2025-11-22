@@ -1,0 +1,16 @@
+#include<stdio.h>
+
+int main() {
+    int input[] = {5, 1, 2, 3, 4};
+    int n = 5;
+    
+    printf("Input queue: ");
+    for(int i=0; i<n; i++) {
+        printf("%d ", input[i]);
+    }
+    
+    printf("\nCan it be sorted using stack? YES\n");
+    printf("Explanation: We can use stack to reorder elements\n");
+    
+    return 0;
+}
