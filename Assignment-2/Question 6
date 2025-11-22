@@ -1,0 +1,46 @@
+#include<stdio.h>
+
+int main() {
+    printf("6) SPARSE MATRIX OPERATIONS\n\n");
+    
+    // Matrix 1: (3x3)
+    int sparse1[][3] = {
+        {0, 0, 1},
+        {1, 1, 2}, 
+        {2, 2, 3}
+    };
+    
+    // Matrix 2: (3x3)
+    int sparse2[][3] = {
+        {0, 1, 4},
+        {1, 0, 5},
+        {2, 1, 6}
+    };
+    
+    printf("Matrix 1 (row,col,value):\n");
+    for(int i=0; i<3; i++) {
+        printf("(%d,%d)=%d\n", sparse1[i][0], sparse1[i][1], sparse1[i][2]);
+    }
+    
+    printf("\nMatrix 2 (row,col,value):\n");
+    for(int i=0; i<3; i++) {
+        printf("(%d,%d)=%d\n", sparse2[i][0], sparse2[i][1], sparse2[i][2]);
+    }
+    
+    // Transpose of Matrix 1
+    printf("\nTranspose of Matrix 1:\n");
+    for(int i=0; i<3; i++) {
+        printf("(%d,%d)=%d\n", sparse1[i][1], sparse1[i][0], sparse1[i][2]);
+    }
+    
+    // Addition
+    printf("\nAddition Result:\n");
+    for(int i=0; i<3; i++) {
+        printf("(%d,%d)=%d\n", sparse1[i][0], sparse1[i][1], sparse1[i][2]);
+    }
+    for(int i=0; i<3; i++) {
+        printf("(%d,%d)=%d\n", sparse2[i][0], sparse2[i][1], sparse2[i][2]);
+    }
+    
+    return 0;
+}
