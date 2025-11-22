@@ -1,0 +1,47 @@
+#include<stdio.h>
+#include<string.h>
+
+int main() {
+    char str1[100], str2[100];
+    int count1[26] = {0}, count2[26] = {0};
+    int i, isAnagram = 1;
+    
+    printf("Enter first string: ");
+    scanf("%s", str1);
+    printf("Enter second string: ");
+    scanf("%s", str2);
+    
+    printf("\nChecking if '%s' and '%s' are anagrams...\n", str1, str2);
+    
+    if(strlen(str1) != strlen(str2)) {
+        printf("Different lengths - NOT anagrams\n");
+        return 0;
+    }
+    
+    // Count characters in both strings
+    for(i=0; str1[i] != '\0'; i++) {
+        count1[str1[i]-'a']++;
+        count2[str2[i]-'a']++;
+    }
+    
+    // Compare character counts
+    printf("\nCharacter counts:\n");
+    for(i=0; i<26; i++) {
+        if(count1[i] != count2[i]) {
+            printf("Character '%c': str1 has %d, str2 has %d - NOT matching!\n", 
+                   'a'+i, count1[i], count2[i]);
+            isAnagram = 0;
+        } else if(count1[i] > 0) {
+            printf("Character '%c': both have %d - matching!\n", 
+                   'a'+i, count1[i]);
+        }
+    }
+    
+    if(isAnagram) {
+        printf("\nThey are ANAGRAMS!\n");
+    } else {
+        printf("\n They are NOT anagrams!\n");
+    }
+    
+    return 0;
+}
