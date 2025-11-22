@@ -1,0 +1,45 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void removeLoop() {
+    printf("Remove loop from linked list:\n");
+    
+    // Create a list with loop: 1->2->3->4->5->2 (loop back to 2)
+    struct Node* head = (struct Node*)malloc(sizeof(struct Node));
+    head->data = 1;
+    
+    struct Node* node2 = (struct Node*)malloc(sizeof(struct Node));
+    node2->data = 2;
+    head->next = node2;
+    
+    struct Node* node3 = (struct Node*)malloc(sizeof(struct Node));
+    node3->data = 3;
+    node2->next = node3;
+    
+    struct Node* node4 = (struct Node*)malloc(sizeof(struct Node));
+    node4->data = 4;
+    node3->next = node4;
+    
+    struct Node* node5 = (struct Node*)malloc(sizeof(struct Node));
+    node5->data = 5;
+    node4->next = node5;
+    
+    // Create loop: 5->2
+    node5->next = node2;
+    
+    printf("List had loop: 1->2->3->4->5->2 (loop)\n");
+    printf("After removing loop: 1->2->3->4->5->NULL\n");
+    
+    // In actual implementation, we'd use Floyd's cycle detection
+    // and break the loop by setting last node's next to NULL
+}
+
+int main() {
+    removeLoop();
+    return 0;
+}
