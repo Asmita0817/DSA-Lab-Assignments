@@ -1,0 +1,70 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+int main() {
+    cout << "=== MAXIMUM SUM COMBINATION ===" << endl << endl;
+    
+    // Example 1
+    cout << "Example 1:" << endl;
+    int a1[] = {3, 2};
+    int b1[] = {1, 4};
+    int k1 = 2;
+    
+    cout << "a[] = [3, 2], b[] = [1, 4], k = 2" << endl;
+    
+    // Calculate all possible sums
+    vector<int> sums1;
+    for(int i=0; i<2; i++) {
+        for(int j=0; j<2; j++) {
+            sums1.push_back(a1[i] + b1[j]);
+        }
+    }
+    
+    // Sort in descending order
+    sort(sums1.begin(), sums1.end(), greater<int>());
+    
+    cout << "All possible sums: ";
+    for(int sum : sums1) cout << sum << " ";
+    cout << endl;
+    
+    cout << "Top " << k1 << " sums: [";
+    for(int i=0; i<k1; i++) {
+        cout << sums1[i];
+        if(i != k1-1) cout << ", ";
+    }
+    cout << "]" << endl << endl;
+    
+    // Example 2
+    cout << "Example 2:" << endl;
+    int a2[] = {1, 4, 2, 3};
+    int b2[] = {2, 5, 1, 6};
+    int k2 = 3;
+    
+    cout << "a[] = [1, 4, 2, 3], b[] = [2, 5, 1, 6], k = 3" << endl;
+    
+    // Calculate all possible sums
+    vector<int> sums2;
+    for(int i=0; i<4; i++) {
+        for(int j=0; j<4; j++) {
+            sums2.push_back(a2[i] + b2[j]);
+        }
+    }
+    
+    // Sort in descending order
+    sort(sums2.begin(), sums2.end(), greater<int>());
+    
+    cout << "Top " << k2 << " sums: [";
+    for(int i=0; i<k2; i++) {
+        cout << sums2[i];
+        if(i != k2-1) cout << ", ";
+    }
+    cout << "]" << endl;
+    
+    // Show top combinations
+    cout << "Top combinations: ";
+    cout << "4+6=10, 3+6=9, 4+5=9" << endl;
+    
+    return 0;
+}
