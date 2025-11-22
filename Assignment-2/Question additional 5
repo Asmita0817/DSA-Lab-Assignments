@@ -1,0 +1,41 @@
+#include<stdio.h>
+
+int main() {
+    int arr[] = {1, 0, 2, 3, 0, 4};
+    int n = 6;
+    
+    printf("Original array: ");
+    for(int i=0; i<n; i++) {
+        printf("%d ", arr[i]);
+    }
+    
+    printf("\n\nDuplicating zeros...\n");
+    for(int i=0; i<n-1; i++) {
+        if(arr[i] == 0) {
+            printf("Found zero at position %d, shifting...\n", i);
+            
+            // Shift elements to right
+            for(int j=n-1; j>i+1; j--) {
+                arr[j] = arr[j-1];
+            }
+            
+            // Insert duplicate zero
+            arr[i+1] = 0;
+            i++; // Skip the zero we just inserted
+            
+            printf("Array after duplication: ");
+            for(int k=0; k<n; k++) {
+                printf("%d ", arr[k]);
+            }
+            printf("\n");
+        }
+    }
+    
+    printf("\nFinal array: ");
+    for(int i=0; i<n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+    
+    return 0;
+}
