@@ -1,0 +1,48 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void displayWithHeadRepeat() {
+    // Create circular list: 20->100->40->80->60
+    struct Node* head = NULL;
+    int arr[] = {20, 100, 40, 80, 60};
+    int n = 5;
+    
+    // Build circular linked list
+    struct Node* last = NULL;
+    for(int i=0; i<n; i++) {
+        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+        newNode->data = arr[i];
+        newNode->next = NULL;
+        
+        if(head == NULL) {
+            head = newNode;
+            last = newNode;
+        } else {
+            last->next = newNode;
+            last = newNode;
+        }
+    }
+    last->next = head; // Make it circular
+    
+    // Display with head repeated at end
+    printf("Input: 20 → 100 → 40 → 80 → 60\n");
+    printf("Output: ");
+    
+    struct Node* temp = head;
+    do {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    } while(temp != head);
+    
+    printf("%d\n", head->data); // Print head again at end
+}
+
+int main() {
+    displayWithHeadRepeat();
+    return 0;
+}
