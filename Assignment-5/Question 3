@@ -1,0 +1,42 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void findMiddle() {
+    // Create sample list: 1->2->3->4->5
+    struct Node* head = NULL;
+    for(int i=5; i>=1; i--) {
+        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+        newNode->data = i;
+        newNode->next = head;
+        head = newNode;
+    }
+    
+    printf("List: ");
+    struct Node* temp = head;
+    while(temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+    
+    // Find middle using two pointers
+    struct Node* slow = head;
+    struct Node* fast = head;
+    
+    while(fast != NULL && fast->next != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    
+    printf("Middle element: %d\n", slow->data);
+}
+
+int main() {
+    findMiddle();
+    return 0;
+}
