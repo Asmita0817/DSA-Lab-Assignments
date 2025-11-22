@@ -1,0 +1,59 @@
+#include<iostream>
+using namespace std;
+
+void sortEvenOdd(int arr[], int n) {
+    int evenCount = (n + 1) / 2;
+    int oddCount = n / 2;
+    
+    int even[evenCount], odd[oddCount];
+    int e = 0, o = 0;
+    
+    // Separate elements
+    for(int i=0; i<n; i++) {
+        if(i % 2 == 0) {
+            even[e++] = arr[i];
+        } else {
+            odd[o++] = arr[i];
+        }
+    }
+    
+    // Sort even positions (bubble sort)
+    for(int i=0; i<evenCount-1; i++) {
+        for(int j=0; j<evenCount-i-1; j++) {
+            if(even[j] > even[j+1]) {
+                swap(even[j], even[j+1]);
+            }
+        }
+    }
+    
+    // Sort odd positions in reverse (bubble sort)
+    for(int i=0; i<oddCount-1; i++) {
+        for(int j=0; j<oddCount-i-1; j++) {
+            if(odd[j] < odd[j+1]) {
+                swap(odd[j], odd[j+1]);
+            }
+        }
+    }
+    
+    // Put back in original array
+    int index = 0;
+    for(int i=0; i<evenCount; i++) arr[index++] = even[i];
+    for(int i=0; i<oddCount; i++) arr[index++] = odd[i];
+}
+
+int main() {
+    int arr[] = {0, 1, 2, 3, 4, 5, 6, 7};
+    int n = 8;
+    
+    cout << "Before: ";
+    for(int i=0; i<n; i++) cout << arr[i] << " ";
+    cout << endl;
+    
+    sortEvenOdd(arr, n);
+    
+    cout << "After: ";
+    for(int i=0; i<n; i++) cout << arr[i] << " ";
+    cout << endl;
+    
+    return 0;
+}
