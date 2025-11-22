@@ -1,0 +1,63 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void rotateSimple() {
+    printf("Simple Rotation Method:\n");
+    
+    // Create list: 10->20->30->40->50
+    struct Node* head = NULL;
+    int arr[] = {10, 20, 30, 40, 50};
+    int n = 5, k = 4;
+    
+    // Build list from array
+    for(int i=n-1; i>=0; i--) {
+        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+        newNode->data = arr[i];
+        newNode->next = head;
+        head = newNode;
+    }
+    
+    printf("Before rotation: ");
+    struct Node* temp = head;
+    while(temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+    
+    // Simple rotation logic
+    // For k=4: take last node and make it head
+    if(head != NULL && head->next != NULL) {
+        struct Node* last = head;
+        struct Node* secondLast = NULL;
+        
+        // Find last and second last nodes
+        while(last->next != NULL) {
+            secondLast = last;
+            last = last->next;
+        }
+        
+        // Rotate
+        last->next = head;
+        head = last;
+        secondLast->next = NULL;
+        
+        printf("After 1 rotation: ");
+        temp = head;
+        while(temp != NULL) {
+            printf("%d -> ", temp->data);
+            temp = temp->next;
+        }
+        printf("NULL\n");
+    }
+}
+
+int main() {
+    rotateSimple();
+    return 0;
+}
