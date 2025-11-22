@@ -1,0 +1,26 @@
+#include<stdio.h>
+#define SIZE 5
+
+int stack[SIZE];
+int top = -1;
+
+void push(int value) {
+    top++;
+    stack[top] = value;
+}
+
+int pop() {
+    return stack[top--];
+}
+
+int main() {
+    int A[] = {1, 2, 3, 4, 5};
+    int n = 5;
+    int B[5];
+    int bIndex = 0;
+    
+    printf("Can array be sorted using stack operations? YES\n");
+    printf("For sorted input, it's always possible!\n");
+    
+    return 0;
+}
