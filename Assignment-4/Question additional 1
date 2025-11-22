@@ -1,0 +1,25 @@
+#include<stdio.h>
+
+int main() {
+    int n;
+    printf("Enter n: ");
+    scanf("%d", &n);
+    
+    printf("Binary numbers from 1 to %d: ", n);
+    for(int i=1; i<=n; i++) {
+        // Simple decimal to binary conversion
+        int num = i;
+        long binary = 0, base = 1;
+        
+        while(num > 0) {
+            binary += (num % 2) * base;
+            num /= 2;
+            base *= 10;
+        }
+        
+        printf("%ld ", binary);
+    }
+    printf("\n");
+    
+    return 0;
+}
