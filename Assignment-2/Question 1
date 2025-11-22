@@ -1,0 +1,39 @@
+#include<stdio.h>
+
+int main() {
+    int arr[] = {2, 5, 8, 12, 16, 23, 38, 45, 67, 89};
+    int n = 10;
+    int search, found = 0;
+    int low = 0, high = n-1, mid;
+    
+    printf("Array: ");
+    for(int i=0; i<n; i++) {
+        printf("%d ", arr[i]);
+    }
+    
+    printf("\nEnter number to search: ");
+    scanf("%d", &search);
+    
+    // Binary Search
+    while(low <= high) {
+        mid = (low + high) / 2;
+        
+        if(arr[mid] == search) {
+            printf("Found at position %d\n", mid+1);
+            found = 1;
+            break;
+        }
+        else if(search > arr[mid]) {
+            low = mid + 1;
+        }
+        else {
+            high = mid - 1;
+        }
+    }
+    
+    if(!found) {
+        printf("Number not found\n");
+    }
+    
+    return 0;
+}
