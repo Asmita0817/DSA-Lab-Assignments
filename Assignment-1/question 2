@@ -1,0 +1,34 @@
+#include<stdio.h>
+
+int main() {
+    int arr[6] = {1, 2, 2, 3, 4, 4}; // Sample array with duplicates
+    int unique[6];
+    int i, j, k=0;
+    
+    printf("Original array: ");
+    for(i=0; i<6; i++) {
+        printf("%d ", arr[i]);
+    }
+    
+    // Remove duplicates
+    for(i=0; i<6; i++) {
+        int found = 0;
+        for(j=0; j<k; j++) {
+            if(arr[i] == unique[j]) {
+                found = 1;
+                break;
+            }
+        }
+        if(!found) {
+            unique[k] = arr[i];
+            k++;
+        }
+    }
+    
+    printf("\nArray after removing duplicates: ");
+    for(i=0; i<k; i++) {
+        printf("%d ", unique[i]);
+    }
+    
+    return 0;
+}
