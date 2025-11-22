@@ -1,0 +1,63 @@
+#include<stdio.h>
+
+int main() {
+    printf("5) Matrix Storage Optimization\n\n");
+    
+    // 5a) Diagonal Matrix
+    printf("5a) Diagonal Matrix:\n");
+    int diag[] = {1, 2, 3}; // Store only diagonal elements
+    printf("Diagonal elements stored: ");
+    for(int i=0; i<3; i++) {
+        printf("%d ", diag[i]);
+    }
+    printf("\nFull 3x3 matrix would be:\n");
+    printf("%d 0 0\n", diag[0]);
+    printf("0 %d 0\n", diag[1]);
+    printf("0 0 %d\n", diag[2]);
+    
+    // 5b) Tri-diagonal Matrix
+    printf("\n5b) Tri-diagonal Matrix:\n");
+    int tri[] = {2,3,1, 4,5,2, 6,7}; // Main, upper, lower diagonals
+    printf("Stored elements: ");
+    for(int i=0; i<8; i++) {
+        printf("%d ", tri[i]);
+    }
+    
+    // 5c) Lower Triangular Matrix
+    printf("\n\n5c) Lower Triangular Matrix:\n");
+    int lower[] = {1,2,3,4,5,6}; // Row by row storage
+    printf("Stored elements: ");
+    for(int i=0; i<6; i++) {
+        printf("%d ", lower[i]);
+    }
+    printf("\n3x3 matrix from stored elements:\n");
+    printf("%d 0 0\n", lower[0]);
+    printf("%d %d 0\n", lower[1], lower[2]);
+    printf("%d %d %d\n", lower[3], lower[4], lower[5]);
+    
+    // 5d) Upper Triangular Matrix
+    printf("\n5d) Upper Triangular Matrix:\n");
+    int upper[] = {1,2,3,4,5,6}; // Row by row storage
+    printf("Stored elements: ");
+    for(int i=0; i<6; i++) {
+        printf("%d ", upper[i]);
+    }
+    printf("\n3x3 matrix from stored elements:\n");
+    printf("%d %d %d\n", upper[0], upper[1], upper[2]);
+    printf("0 %d %d\n", upper[3], upper[4]);
+    printf("0 0 %d\n", upper[5]);
+    
+    // 5e) Symmetric Matrix
+    printf("\n5e) Symmetric Matrix:\n");
+    int sym[] = {1,2,3,4,5,6}; // Store lower triangle only
+    printf("Stored lower triangle: ");
+    for(int i=0; i<6; i++) {
+        printf("%d ", sym[i]);
+    }
+    printf("\n3x3 symmetric matrix:\n");
+    printf("%d %d %d\n", sym[0], sym[1], sym[3]);
+    printf("%d %d %d\n", sym[1], sym[2], sym[4]);
+    printf("%d %d %d\n", sym[3], sym[4], sym[5]);
+    
+    return 0;
+}
