@@ -1,0 +1,63 @@
+#include<stdio.h>
+#include<string.h>
+#include<ctype.h>
+#define SIZE 100
+
+char stack[SIZE];
+int top = -1;
+
+void push(char c) {
+    top++;
+    stack[top] = c;
+}
+
+char pop() {
+    return stack[top--];
+}
+
+int priority(char op) {
+    if(op == '+' || op == '-') return 1;
+    if(op == '*' || op == '/') return 2;
+    return 0;
+}
+
+int main() {
+    char infix[100], postfix[100];
+    int j = 0;
+    
+    printf("Enter infix expression: ");
+    scanf("%s", infix);
+    
+    for(int i=0; i<strlen(infix); i++) {
+        char ch = infix[i];
+        
+        if(isalnum(ch)) {
+            postfix[j++] = ch;
+        }
+        else if(ch == '(') {
+            push(ch);
+        }
+        else if(ch == ')') {
+            while(top != -1 && stack[top] != '(') {
+                postfix[j++] = pop();
+            }
+            pop(); // Remove '('
+        }
+        else {
+            while(top != -1 && priority(stack[top]) >= priority(ch)) {
+                postfix[j++] = pop();
+            }
+            push(ch);
+        }
+    }
+    
+    while(top != -1) {
+        postfix[j++] = pop();
+    }
+    postfix[j] = '\0';
+    
+    printf("Infix: %s\n", infix);
+    printf("Postfix: %s\n", postfix);
+    
+    return 0;
+}
