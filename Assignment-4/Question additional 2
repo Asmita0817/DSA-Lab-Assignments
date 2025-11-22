@@ -1,0 +1,31 @@
+#include<stdio.h>
+#define SIZE 4
+
+int main() {
+    int queue[] = {11, 5, 4, 21};
+    int n = 4;
+    
+    printf("Original queue: ");
+    for(int i=0; i<n; i++) {
+        printf("%d ", queue[i]);
+    }
+    
+    // Simple bubble sort on array
+    for(int i=0; i<n-1; i++) {
+        for(int j=0; j<n-i-1; j++) {
+            if(queue[j] > queue[j+1]) {
+                int temp = queue[j];
+                queue[j] = queue[j+1];
+                queue[j+1] = temp;
+            }
+        }
+    }
+    
+    printf("\nSorted queue: ");
+    for(int i=0; i<n; i++) {
+        printf("%d ", queue[i]);
+    }
+    printf("\n");
+    
+    return 0;
+}
