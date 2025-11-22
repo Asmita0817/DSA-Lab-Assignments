@@ -1,0 +1,30 @@
+#include<stdio.h>
+
+int main() {
+    int temp[] = {73, 74, 75, 71, 69, 72, 76, 73};
+    int n = 8;
+    int answer[8] = {0};
+    
+    printf("Temperatures: ");
+    for(int i=0; i<n; i++) {
+        printf("%d ", temp[i]);
+    }
+    printf("\n");
+    
+    for(int i=0; i<n; i++) {
+        for(int j=i+1; j<n; j++) {
+            if(temp[j] > temp[i]) {
+                answer[i] = j - i;
+                break;
+            }
+        }
+    }
+    
+    printf("Days to wait: ");
+    for(int i=0; i<n; i++) {
+        printf("%d ", answer[i]);
+    }
+    printf("\n");
+    
+    return 0;
+}
