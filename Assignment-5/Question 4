@@ -1,0 +1,52 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void reverseList() {
+    // Create sample list: 1->2->3->4->NULL
+    struct Node* head = NULL;
+    for(int i=4; i>=1; i--) {
+        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+        newNode->data = i;
+        newNode->next = head;
+        head = newNode;
+    }
+    
+    printf("Original: ");
+    struct Node* temp = head;
+    while(temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+    
+    // Reverse the list
+    struct Node* prev = NULL;
+    struct Node* current = head;
+    struct Node* next = NULL;
+    
+    while(current != NULL) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    head = prev;
+    
+    printf("Reversed: ");
+    temp = head;
+    while(temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    reverseList();
+    return 0;
+}
