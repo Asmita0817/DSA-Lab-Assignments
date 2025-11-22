@@ -1,0 +1,428 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+// Structure for Circular Linked List
+struct CNode {
+    int data;
+    struct CNode* next;
+};
+
+// Structure for Doubly Linked List  
+struct DNode {
+    int data;
+    struct DNode* next;
+    struct DNode* prev;
+};
+
+struct CNode* chead = NULL;
+struct DNode* dhead = NULL;
+
+// ========== CIRCULAR LINKED LIST FUNCTIONS ==========
+
+// Display Circular List
+void displayCircular() {
+    if(chead == NULL) {
+        printf("Circular List is empty!\n");
+        return;
+    }
+    
+    struct CNode* temp = chead;
+    printf("Circular List: ");
+    do {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    } while(temp != chead);
+    printf("(back to %d)\n", chead->data);
+}
+
+// Insert at beginning of Circular List
+void cInsertStart() {
+    int value;
+    printf("Enter value: ");
+    scanf("%d", &value);
+    
+    struct CNode* newNode = (struct CNode*)malloc(sizeof(struct CNode));
+    newNode->data = value;
+    
+    if(chead == NULL) {
+        newNode->next = newNode;
+        chead = newNode;
+    } else {
+        struct CNode* temp = chead;
+        while(temp->next != chead) {
+            temp = temp->next;
+        }
+        newNode->next = chead;
+        temp->next = newNode;
+        chead = newNode;
+    }
+    printf("%d inserted at beginning\n", value);
+}
+
+// Insert at end of Circular List
+void cInsertEnd() {
+    int value;
+    printf("Enter value: ");
+    scanf("%d", &value);
+    
+    struct CNode* newNode = (struct CNode*)malloc(sizeof(struct CNode));
+    newNode->data = value;
+    
+    if(chead == NULL) {
+        newNode->next = newNode;
+        chead = newNode;
+    } else {
+        struct CNode* temp = chead;
+        while(temp->next != chead) {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+        newNode->next = chead;
+    }
+    printf("%d inserted at end\n", value);
+}
+
+// Insert after specific value in Circular List
+void cInsertAfter() {
+    int value, afterValue;
+    printf("Enter value to insert: ");
+    scanf("%d", &value);
+    printf("Enter value after which to insert: ");
+    scanf("%d", &afterValue);
+    
+    if(chead == NULL) {
+        printf("List is empty!\n");
+        return;
+    }
+    
+    struct CNode* temp = chead;
+    do {
+        if(temp->data == afterValue) {
+            struct CNode* newNode = (struct CNode*)malloc(sizeof(struct CNode));
+            newNode->data = value;
+            newNode->next = temp->next;
+            temp->next = newNode;
+            printf("%d inserted after %d\n", value, afterValue);
+            return;
+        }
+        temp = temp->next;
+    } while(temp != chead);
+    
+    printf("Value %d not found!\n", afterValue);
+}
+
+// Delete specific node from Circular List
+void cDeleteNode() {
+    int value;
+    printf("Enter value to delete: ");
+    scanf("%d", &value);
+    
+    if(chead == NULL) {
+        printf("List is empty!\n");
+        return;
+    }
+    
+    struct CNode *current = chead, *prev = NULL;
+    
+    // If head node to be deleted
+    if(current->data == value) {
+        // Find last node
+        struct CNode* last = chead;
+        while(last->next != chead) {
+            last = last->next;
+        }
+        
+        if(chead->next == chead) { // Only one node
+            free(chead);
+            chead = NULL;
+        } else {
+            last->next = chead->next;
+            free(chead);
+            chead = last->next;
+        }
+        printf("%d deleted from list\n", value);
+        return;
+    }
+    
+    // Search for node to delete
+    do {
+        prev = current;
+        current = current->next;
+        if(current->data == value) {
+            prev->next = current->next;
+            free(current);
+            printf("%d deleted from list\n", value);
+            return;
+        }
+    } while(current != chead);
+    
+    printf("Value %d not found!\n", value);
+}
+
+// Search in Circular List
+void cSearchNode() {
+    int value, position = 1;
+    printf("Enter value to search: ");
+    scanf("%d", &value);
+    
+    if(chead == NULL) {
+        printf("List is empty!\n");
+        return;
+    }
+    
+    struct CNode* temp = chead;
+    do {
+        if(temp->data == value) {
+            printf("Value %d found at position %d\n", value, position);
+            return;
+        }
+        temp = temp->next;
+        position++;
+    } while(temp != chead);
+    
+    printf("Value %d not found!\n", value);
+}
+
+// ========== DOUBLY LINKED LIST FUNCTIONS ==========
+
+// Display Doubly List
+void displayDoubly() {
+    if(dhead == NULL) {
+        printf("Doubly List is empty!\n");
+        return;
+    }
+    
+    struct DNode* temp = dhead;
+    printf("Doubly List: NULL <- ");
+    while(temp != NULL) {
+        printf("%d", temp->data);
+        if(temp->next != NULL) {
+            printf(" <-> ");
+        }
+        temp = temp->next;
+    }
+    printf(" -> NULL\n");
+}
+
+// Insert at beginning of Doubly List
+void dInsertStart() {
+    int value;
+    printf("Enter value: ");
+    scanf("%d", &value);
+    
+    struct DNode* newNode = (struct DNode*)malloc(sizeof(struct DNode));
+    newNode->data = value;
+    newNode->prev = NULL;
+    newNode->next = dhead;
+    
+    if(dhead != NULL) {
+        dhead->prev = newNode;
+    }
+    dhead = newNode;
+    printf("%d inserted at beginning\n", value);
+}
+
+// Insert at end of Doubly List
+void dInsertEnd() {
+    int value;
+    printf("Enter value: ");
+    scanf("%d", &value);
+    
+    struct DNode* newNode = (struct DNode*)malloc(sizeof(struct DNode));
+    newNode->data = value;
+    newNode->next = NULL;
+    
+    if(dhead == NULL) {
+        newNode->prev = NULL;
+        dhead = newNode;
+    } else {
+        struct DNode* temp = dhead;
+        while(temp->next != NULL) {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+        newNode->prev = temp;
+    }
+    printf("%d inserted at end\n", value);
+}
+
+// Insert after specific value in Doubly List
+void dInsertAfter() {
+    int value, afterValue;
+    printf("Enter value to insert: ");
+    scanf("%d", &value);
+    printf("Enter value after which to insert: ");
+    scanf("%d", &afterValue);
+    
+    if(dhead == NULL) {
+        printf("List is empty!\n");
+        return;
+    }
+    
+    struct DNode* temp = dhead;
+    while(temp != NULL) {
+        if(temp->data == afterValue) {
+            struct DNode* newNode = (struct DNode*)malloc(sizeof(struct DNode));
+            newNode->data = value;
+            newNode->next = temp->next;
+            newNode->prev = temp;
+            
+            if(temp->next != NULL) {
+                temp->next->prev = newNode;
+            }
+            temp->next = newNode;
+            
+            printf("%d inserted after %d\n", value, afterValue);
+            return;
+        }
+        temp = temp->next;
+    }
+    
+    printf("Value %d not found!\n", afterValue);
+}
+
+// Delete specific node from Doubly List
+void dDeleteNode() {
+    int value;
+    printf("Enter value to delete: ");
+    scanf("%d", &value);
+    
+    if(dhead == NULL) {
+        printf("List is empty!\n");
+        return;
+    }
+    
+    struct DNode* temp = dhead;
+    
+    // If head node to be deleted
+    if(temp->data == value) {
+        dhead = temp->next;
+        if(dhead != NULL) {
+            dhead->prev = NULL;
+        }
+        free(temp);
+        printf("%d deleted from list\n", value);
+        return;
+    }
+    
+    // Search for node to delete
+    while(temp != NULL && temp->data != value) {
+        temp = temp->next;
+    }
+    
+    if(temp == NULL) {
+        printf("Value %d not found!\n", value);
+        return;
+    }
+    
+    // Adjust links
+    if(temp->next != NULL) {
+        temp->next->prev = temp->prev;
+    }
+    if(temp->prev != NULL) {
+        temp->prev->next = temp->next;
+    }
+    
+    free(temp);
+    printf("%d deleted from list\n", value);
+}
+
+// Search in Doubly List
+void dSearchNode() {
+    int value, position = 1;
+    printf("Enter value to search: ");
+    scanf("%d", &value);
+    
+    struct DNode* temp = dhead;
+    while(temp != NULL) {
+        if(temp->data == value) {
+            printf("Value %d found at position %d\n", value, position);
+            return;
+        }
+        temp = temp->next;
+        position++;
+    }
+    printf("Value %d not found!\n", value);
+}
+
+// ========== MAIN MENU ==========
+
+int main() {
+    int mainChoice, subChoice;
+    
+    printf("=== LINKED LIST OPERATIONS ===\n\n");
+    
+    while(1) {
+        printf("\nMain Menu:\n");
+        printf("1. Circular Linked List Operations\n");
+        printf("2. Doubly Linked List Operations\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &mainChoice);
+        
+        switch(mainChoice) {
+            case 1: // Circular List Operations
+                while(1) {
+                    printf("\n--- CIRCULAR LINKED LIST ---\n");
+                    printf("1. Insert at beginning\n");
+                    printf("2. Insert at end\n");
+                    printf("3. Insert after specific value\n");
+                    printf("4. Delete specific node\n");
+                    printf("5. Search node\n");
+                    printf("6. Display list\n");
+                    printf("7. Back to Main Menu\n");
+                    printf("Enter your choice: ");
+                    scanf("%d", &subChoice);
+                    
+                    switch(subChoice) {
+                        case 1: cInsertStart(); break;
+                        case 2: cInsertEnd(); break;
+                        case 3: cInsertAfter(); break;
+                        case 4: cDeleteNode(); break;
+                        case 5: cSearchNode(); break;
+                        case 6: displayCircular(); break;
+                        case 7: break;
+                        default: printf("Invalid choice!\n");
+                    }
+                    if(subChoice == 7) break;
+                }
+                break;
+                
+            case 2: // Doubly List Operations
+                while(1) {
+                    printf("\n--- DOUBLY LINKED LIST ---\n");
+                    printf("1. Insert at beginning\n");
+                    printf("2. Insert at end\n");
+                    printf("3. Insert after specific value\n");
+                    printf("4. Delete specific node\n");
+                    printf("5. Search node\n");
+                    printf("6. Display list\n");
+                    printf("7. Back to Main Menu\n");
+                    printf("Enter your choice: ");
+                    scanf("%d", &subChoice);
+                    
+                    switch(subChoice) {
+                        case 1: dInsertStart(); break;
+                        case 2: dInsertEnd(); break;
+                        case 3: dInsertAfter(); break;
+                        case 4: dDeleteNode(); break;
+                        case 5: dSearchNode(); break;
+                        case 6: displayDoubly(); break;
+                        case 7: break;
+                        default: printf("Invalid choice!\n");
+                    }
+                    if(subChoice == 7) break;
+                }
+                break;
+                
+            case 3:
+                printf("Program exited!\n");
+                return 0;
+                
+            default:
+                printf("Invalid choice!\n");
+        }
+    }
+    
+    return 0;
+}
