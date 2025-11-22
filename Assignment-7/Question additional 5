@@ -1,0 +1,109 @@
+#include<iostream>
+using namespace std;
+
+int main() {
+    cout << "=== MAXIMUM ICE CREAM BARS ===" << endl << endl;
+    
+    // Example 1
+    cout << "Example 1:" << endl;
+    int costs1[] = {1, 3, 2, 4, 1};
+    int coins1 = 7;
+    int n1 = 5;
+    
+    cout << "Costs: [1, 3, 2, 4, 1], Coins: 7" << endl;
+    
+    // Find maximum cost for counting sort
+    int maxCost = 0;
+    for(int i=0; i<n1; i++) {
+        if(costs1[i] > maxCost) maxCost = costs1[i];
+    }
+    
+    // Create count array
+    int count[maxCost + 1] = {0};
+    for(int i=0; i<n1; i++) {
+        count[costs1[i]]++;
+    }
+    
+    // Buy cheapest ice creams first
+    int icecreams = 0;
+    int remainingCoins = coins1;
+    
+    for(int cost=1; cost<=maxCost; cost++) {
+        while(count[cost] > 0 && remainingCoins >= cost) {
+            icecreams++;
+            remainingCoins -= cost;
+            count[cost]--;
+        }
+    }
+    
+    cout << "Output: " << icecreams << endl;
+    cout << "Explanation: Buy costs 1,1,2,3 = 1+1+2+3 = 7" << endl << endl;
+    
+    // Example 2
+    cout << "Example 2:" << endl;
+    int costs2[] = {10, 6, 8, 7, 7, 8};
+    int coins2 = 5;
+    int n2 = 6;
+    
+    cout << "Costs: [10, 6, 8, 7, 7, 8], Coins: 5" << endl;
+    
+    // Reset for example 2
+    maxCost = 0;
+    for(int i=0; i<n2; i++) {
+        if(costs2[i] > maxCost) maxCost = costs2[i];
+    }
+    
+    int count2[maxCost + 1] = {0};
+    for(int i=0; i<n2; i++) {
+        count2[costs2[i]]++;
+    }
+    
+    icecreams = 0;
+    remainingCoins = coins2;
+    
+    for(int cost=1; cost<=maxCost; cost++) {
+        while(count2[cost] > 0 && remainingCoins >= cost) {
+            icecreams++;
+            remainingCoins -= cost;
+            count2[cost]--;
+        }
+    }
+    
+    cout << "Output: " << icecreams << endl;
+    cout << "Explanation: Cheapest costs 6, but only 5 coins available" << endl << endl;
+    
+    // Example 3
+    cout << "Example 3:" << endl;
+    int costs3[] = {1, 6, 3, 1, 2, 5};
+    int coins3 = 20;
+    int n3 = 6;
+    
+    cout << "Costs: [1, 6, 3, 1, 2, 5], Coins: 20" << endl;
+    
+    // Reset for example 3
+    maxCost = 0;
+    for(int i=0; i<n3; i++) {
+        if(costs3[i] > maxCost) maxCost = costs3[i];
+    }
+    
+    int count3[maxCost + 1] = {0};
+    for(int i=0; i<n3; i++) {
+        count3[costs3[i]]++;
+    }
+    
+    icecreams = 0;
+    remainingCoins = coins3;
+    
+    for(int cost=1; cost<=maxCost; cost++) {
+        while(count3[cost] > 0 && remainingCoins >= cost) {
+            icecreams++;
+            remainingCoins -= cost;
+            count3[cost]--;
+        }
+    }
+    
+    cout << "Output: " << icecreams << endl;
+    cout << "Explanation: Buy all 6 = 1+6+3+1+2+5 = 18" << endl;
+    
+    return 0;
+}
