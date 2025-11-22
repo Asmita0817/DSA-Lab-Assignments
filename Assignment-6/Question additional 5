@@ -1,0 +1,213 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;    // Right pointer
+    struct Node* prev;    // Left pointer  
+    struct Node* up;      // Up pointer
+    struct Node* down;    // Down pointer
+};
+
+// Function to create a new node
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    newNode->prev = NULL;
+    newNode->up = NULL;
+    newNode->down = NULL;
+    return newNode;
+}
+
+// Function to convert 2D matrix to 4-way doubly linked list
+struct Node* matrixTo4WayList(int matrix[3][3], int rows, int cols) {
+    struct Node* head = NULL;
+    struct Node* rowHeads[rows]; // Store head of each row
+    
+    // First pass: Create all nodes and set up horizontal links
+    for(int i=0; i<rows; i++) {
+        struct Node* current = NULL;
+        struct Node* prevNode = NULL;
+        
+        for(int j=0; j<cols; j++) {
+            struct Node* newNode = createNode(matrix[i][j]);
+            
+            if(j == 0) {
+                rowHeads[i] = newNode; // Store row head
+                if(i == 0) head = newNode; // Overall head
+            }
+            
+            if(prevNode != NULL) {
+                prevNode->next = newNode;
+                newNode->prev = prevNode;
+            }
+            
+            prevNode = newNode;
+            current = newNode;
+        }
+    }
+    
+    // Second pass: Set up vertical links
+    for(int i=0; i<rows; i++) {
+        for(int j=0; j<cols; j++) {
+            // Find current node
+            struct Node* currentNode = rowHeads[i];
+            for(int k=0; k<j; k++) {
+                currentNode = currentNode->next;
+            }
+            
+            // Set up pointer
+            if(i > 0) {
+                struct Node* upNode = rowHeads[i-1];
+                for(int k=0; k<j; k++) {
+                    upNode = upNode->next;
+                }
+                currentNode->up = upNode;
+                upNode->down = currentNode;
+            }
+            
+            // Set down pointer (for last row, down will remain NULL)
+            if(i < rows-1) {
+                struct Node* downNode = rowHeads[i+1];
+                for(int k=0; k<j; k++) {
+                    downNode = downNode->next;
+                }
+                currentNode->down = downNode;
+            }
+        }
+    }
+    
+    return head;
+}
+
+// Function to display the 4-way linked list
+void display4WayList(struct Node* head, int rows, int cols) {
+    printf("4-Way Doubly Linked List:\n\n");
+    
+    // Store row heads for traversal
+    struct Node* rowHeads[rows];
+    struct Node* temp = head;
+    
+    // Get all row heads
+    for(int i=0; i<rows; i++) {
+        rowHeads[i] = temp;
+        if(i < rows-1 && temp != NULL && temp->down != NULL) {
+            temp = temp->down;
+        }
+    }
+    
+    // Display each node with its connections
+    for(int i=0; i<rows; i++) {
+        struct Node* current = rowHeads[i];
+        printf("Row %d: ", i+1);
+        
+        while(current != NULL) {
+            printf("%d", current->data);
+            
+            // Show connections
+            printf("(L:");
+            if(current->prev) printf("%d", current->prev->data);
+            else printf("N");
+            
+            printf(",R:");
+            if(current->next) printf("%d", current->next->data);
+            else printf("N");
+            
+            printf(",U:");
+            if(current->up) printf("%d", current->up->data);
+            else printf("N");
+            
+            printf(",D:");
+            if(current->down) printf("%d", current->down->data);
+            else printf("N");
+            
+            printf(")");
+            
+            if(current->next != NULL) printf(" <-> ");
+            current = current->next;
+        }
+        printf(" -> NULL\n");
+    }
+}
+
+// Function to display in the requested format
+void displayInRequestedFormat(struct Node* head, int rows, int cols) {
+    printf("\nOutput in requested format:\n");
+    
+    struct Node* rowHead = head;
+    
+    for(int i=0; i<rows; i++) {
+        struct Node* current = rowHead;
+        
+        while(current != NULL) {
+            printf("%d\n", current->data);
+            current = current->next;
+        }
+        printf("NULL\n");
+        
+        if(rowHead != NULL && rowHead->down != NULL) {
+            rowHead = rowHead->down;
+        }
+    }
+    
+    // Print NULL for remaining connections
+    for(int i=0; i<rows; i++) {
+        printf("NULL\n");
+    }
+}
+
+// Simple traversal demonstration
+void traverseList(struct Node* head) {
+    printf("\nTraversal Demonstration:\n");
+    
+    printf("Right traversal from (0,0): ");
+    struct Node* temp = head;
+    while(temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+    
+    printf("Down traversal from (0,0): ");
+    temp = head;
+    while(temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->down;
+    }
+    printf("\n");
+}
+
+int main() {
+    // Input 2D matrix
+    int matrix[3][3] = {
+        {1, 2, 3},
+        {4, 5, 6},
+        {7, 8, 9}
+    };
+    
+    int rows = 3, cols = 3;
+    
+    printf("Input 2D Matrix:\n");
+    for(int i=0; i<rows; i++) {
+        for(int j=0; j<cols; j++) {
+            printf("%d ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+    
+    // Convert to 4-way doubly linked list
+    struct Node* head = matrixTo4WayList(matrix, rows, cols);
+    
+    // Display detailed connections
+    display4WayList(head, rows, cols);
+    
+    // Display in requested format
+    displayInRequestedFormat(head, rows, cols);
+    
+    // Demonstrate traversal
+    traverseList(head);
+    
+    return 0;
+}
