@@ -1,0 +1,37 @@
+#include<stdio.h>
+
+int main() {
+    int arr[] = {1, 2, 3, 2, 1, 4, 5};
+    int n = 7;
+    int distinct[10];
+    int count = 0;
+    
+    printf("Array: ");
+    for(int i=0; i<n; i++) {
+        printf("%d ", arr[i]);
+    }
+    
+    printf("\n\nFinding distinct elements:\n");
+    for(int i=0; i<n; i++) {
+        int found = 0;
+        for(int j=0; j<count; j++) {
+            if(arr[i] == distinct[j]) {
+                found = 1;
+                break;
+            }
+        }
+        if(!found) {
+            distinct[count] = arr[i];
+            printf("Added: %d\n", arr[i]);
+            count++;
+        }
+    }
+    
+    printf("\nDistinct elements: ");
+    for(int i=0; i<count; i++) {
+        printf("%d ", distinct[i]);
+    }
+    printf("\nTotal distinct: %d\n", count);
+    
+    return 0;
+}
