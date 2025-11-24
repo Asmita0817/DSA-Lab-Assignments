@@ -1,0 +1,92 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+    Node(int val) : data(val), left(nullptr), right(nullptr) {}
+};
+
+// 2(a) Search Recursive
+bool searchRecursive(Node* root, int val) {
+    if (root == nullptr) return false;
+    if (root->data == val) return true;
+    if (val < root->data) return searchRecursive(root->left, val);
+    return searchRecursive(root->right, val);
+}
+
+// 2(a) Search Non-Recursive
+bool searchNonRecursive(Node* root, int val) {
+    Node* current = root;
+    while (current != nullptr) {
+        if (current->data == val) return true;
+        if (val < current->data) current = current->left;
+        else current = current->right;
+    }
+    return false;
+}
+
+// 2(b) Maximum element
+int findMax(Node* root) {
+    if (root == nullptr) return -1;
+    while (root->right != nullptr) root = root->right;
+    return root->data;
+}
+
+// 2(c) Minimum element
+int findMin(Node* root) {
+    if (root == nullptr) return -1;
+    while (root->left != nullptr) root = root->left;
+    return root->data;
+}
+
+// 2(d) In-order successor
+int inorderSuccessor(Node* root, int val) {
+    Node* successor = nullptr;
+    Node* current = root;
+    
+    while (current != nullptr) {
+        if (val < current->data) {
+            successor = current;
+            current = current->left;
+        }
+        else if (val > current->data) {
+            current = current->right;
+        }
+        else {
+            if (current->right != nullptr) {
+                Node* temp = current->right;
+                while (temp->left != nullptr) temp = temp->left;
+                return temp->data;
+            }
+            break;
+        }
+    }
+    return successor ? successor->data : -1;
+}
+
+// 2(e) In-order predecessor
+int inorderPredecessor(Node* root, int val) {
+    Node* predecessor = nullptr;
+    Node* current = root;
+    
+    while (current != nullptr) {
+        if (val < current->data) {
+            current = current->left;
+        }
+        else if (val > current->data) {
+            predecessor = current;
+            current = current->right;
+        }
+        else {
+            if (current->left != nullptr) {
+                Node* temp = current->left;
+                while (temp->right != nullptr) temp = temp->right;
+                return temp->data;
+            }
+            break;
+        }
+    }
+    return predecessor ? predecessor->data : -1;
+}
